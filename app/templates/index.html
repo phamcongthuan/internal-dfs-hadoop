@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <title>My cloud storage</title>
+</head>
+<body>
+    <header>
+        <h1>MY CLOUD STORAGE</h1>
+        <div class="user-info text-end">
+            <div id="username">User: <strong>{{ username }}</strong></div>
+            <div id="storage-info">Storage: <strong>{{ used_storage }} / {{ storage_limit }} MB</strong></div>
+            <a href="{{ url_for('change_password') }}" class="btn btn-secondary btn-sm mt-2">Change Password</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-sm mt-2">Logout</a>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" id="my-drives-tab">My drives</a></li>
+            <li><a href="#" id="trash-tab">Trash</a></li>
+            <li><a href="#" id="shared-tab">Shared with me</a></li>
+            <li><a href="#" id="shared-by-tab">Shared by me</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- My Drives tab -->
+        <section id="my-drives-section">
+            <h2>Drives list</h2>
+            <input type="text" id="search" placeholder="Search your files...">
+            <button id="upload-btn">Upload</button>
+            <div id="upload-progress"></div>
+            <input type="file" id="file-input" style="display:none;" multiple>
+
+            <div id="file-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Upload date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="files">
+                        <!-- Files list -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Trash tab-->
+        <section id="trash-section" style="display: none;">
+            <h2>Trash</h2>
+            <input type="text" id="search-trash" placeholder="Search in trash...">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Deleted date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="trash-files">
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SHared with me tab-->
+        <section id="shared-section" style="display: none;">
+            <h2>Files shared with you</h2>
+            <input type="text" id="search-shared" placeholder="Search in shared files...">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Owner</th>
+                        <th>Size</th>
+                        <th>Upload date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="shared-files">
+                    <!-- Files shared to this user -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Shared by me tab-->
+        <section id="shared-by-section" style="display: none;">
+            <h2>Files you shared</h2>
+            <input type="text" id="search-shared-by" placeholder="Search shared files...">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Recipients</th>
+                    </tr>
+                </thead>
+                <tbody id="shared-by-files">
+                    <!-- Files shared to other users -->
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script>
+        let currentStorage = parseFloat("{{ '%.10f' % used_storage }}");
+        let maxStorage = parseFloat("{{ '%.10f' % storage_limit }}");
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
